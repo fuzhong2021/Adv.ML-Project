@@ -7,6 +7,6 @@ df = pd.read_csv('/Users/furkansaygin/Documents/Studium/ML Projekt 2/data/raw/ol
 # Teile die Daten in 75% und 25% Teile
 train, test = train_test_split(df, test_size=0.25, random_state=42)
 
-# Speichern Sie die resultierenden DataFrames in csv-Dateien
+# Speichern csv-Dateien
 train.to_csv('/Users/furkansaygin/Documents/Studium/ML Projekt 2/data/processed/train.csv', index=False)
 test.to_csv('/Users/furkansaygin/Documents/Studium/ML Projekt 2/data/processed/test.csv', index=False)
