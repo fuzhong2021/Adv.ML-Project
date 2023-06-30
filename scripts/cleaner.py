@@ -13,6 +13,8 @@ def load_and_preprocess_data(filename):
     # Lade den Datensatz
     df = pd.read_csv(filename, delimiter='\t', encoding='utf-8')
 
+
+
     # Prüfe, ob es fehlende Werte gibt
     if df.isnull().values.any():
         print("Es gibt fehlende Werte im Datensatz. Diese werden entfernt.")
@@ -27,8 +29,14 @@ def load_and_preprocess_data(filename):
         df['Text'] = df['Text'].str.replace('[^a-z\s]', '')
 
     # Entferne irrelevante Merkmale
-    if 'irrelevant_feature1' in df.columns and 'irrelevant_feature2' in df.columns:
-        df = df.drop(columns=['irrelevant_feature1', 'irrelevant_feature2'])
+    if 'Date' in df.columns:
+        df = df.drop(columns=['Date'])
+
+    # Entfernen aller nicht Englische oder Deutsche Texte
+    df = df[df['Language'].isin(['English', 'German'])]
+
+    unique_sources = df['Source'].unique()
+    print(unique_sources)
 
     # Entfernen von Stoppwörtern und Durchführen von Stemming
     stop_words = set(stopwords.words(['german', 'english']))
@@ -36,7 +44,7 @@ def load_and_preprocess_data(filename):
     df['Text'] = df['Text'].apply(lambda x: ' '.join(stemmer.stem(word) for word in x.split() if word not in stop_words))
 
     # Erstellen Zielspalte für Populismus basierend auf der Quelle des Artikels
-    df['Populism'] = df['Source'].apply(lambda x: 1 if x == 'Bild' else 0)
+    df['Populism'] = df['Source'].apply(lambda x: 1 if x == 'Bild' or x == 'nypostonline.com' else 0)
 
 
     # Speichere den bereinigten Datensatz
