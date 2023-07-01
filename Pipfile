@@ -4,11 +4,13 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-nltk = "*"
 scikit-learn = "*"
 numpy = "*"
 pandas = "*"
 keras = "*"
+chardet = "*"
+nltk = "*"
+langdetect = "*"
 
 [dev-packages]
 ipykernel = "*"
